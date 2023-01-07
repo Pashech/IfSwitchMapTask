@@ -10,10 +10,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Hero implements Ability {
 
-    private String className;
+    private String myClass;
 
     @Override
     public String superAbility() {
         return "";
+    }
+
+    public String myType(){
+        return "default";
     }
 }

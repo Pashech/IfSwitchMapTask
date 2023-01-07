@@ -24,9 +24,8 @@ public class AbilityController {
     }
 
     @PostMapping("/ability/switch")
-    public Hero abilityRequestSwitch(@RequestBody Hero hero){
-        switchService.spell(hero);
-        return hero;
+    public String abilityRequestSwitch(@RequestBody Hero hero){
+        return switchService.spell(hero);
     }
 
     @PostMapping("/ability/map")

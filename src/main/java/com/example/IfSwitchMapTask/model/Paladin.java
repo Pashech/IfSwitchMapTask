@@ -11,7 +11,11 @@ public class Paladin extends Hero{
 
     @Override
     public String superAbility() {
-        return "Удар воина света";
+        return "Divine Storm";
     }
 
+    @Override
+    public String myType() {
+        return "paladin";
+    }
 }
