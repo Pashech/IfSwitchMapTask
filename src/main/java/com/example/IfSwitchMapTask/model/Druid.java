@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Druid extends Hero{
 
+    public Druid(String myClass) {
+        super(myClass);
+    }
+
     @Override
     public String superAbility() {
         return "Berserk";

@@ -4,15 +4,21 @@ import com.example.IfSwitchMapTask.model.Druid;
 import com.example.IfSwitchMapTask.model.Hero;
 import com.example.IfSwitchMapTask.model.Mage;
 import com.example.IfSwitchMapTask.model.Paladin;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 @SpringBootTest
@@ -30,14 +36,9 @@ class ServicesTest {
 
     @BeforeEach
     public void prepareData() {
-        druid = new Druid();
-        druid.setMyClass("druid");
-
-        mage = new Mage();
-        mage.setMyClass("mage");
-
-        paladin = new Paladin();
-        paladin.setMyClass("paladin");
+        druid = new Druid("druid");
+        mage = new Mage("mage");
+        paladin = new Paladin("paladin");
 
         testSubjectIfElse = IfElseService.builder()
                 .druid(druid)
@@ -56,22 +57,38 @@ class ServicesTest {
 
     @Test
     void spellIfElse() {
-        Assertions.assertEquals("Berserk", testSubjectIfElse.spell(druid));
-        Assertions.assertEquals("Living bomb", testSubjectIfElse.spell(mage));
-        Assertions.assertEquals("Divine Storm", testSubjectIfElse.spell(paladin));
+        assertEquals("Berserk", testSubjectIfElse.spell(druid));
+        assertEquals("Living bomb", testSubjectIfElse.spell(mage));
+        assertEquals("Divine Storm", testSubjectIfElse.spell(paladin));
     }
 
     @Test
     void spellSwitch() {
-        Assertions.assertEquals("Berserk", testSubjectSwitch.spell(druid));
-        Assertions.assertEquals("Living bomb", testSubjectSwitch.spell(mage));
-        Assertions.assertEquals("Divine Storm", testSubjectSwitch.spell(paladin));
+        assertEquals("Berserk", testSubjectSwitch.spell(druid));
+        assertEquals("Living bomb", testSubjectSwitch.spell(mage));
+        assertEquals("Divine Storm", testSubjectSwitch.spell(paladin));
     }
 
     @Test
     void spellMap() {
-        Assertions.assertEquals("Berserk", testSubjectMap.spellMap(druid));
-        Assertions.assertEquals("Living bomb", testSubjectMap.spellMap(mage));
-        Assertions.assertEquals("Divine Storm", testSubjectMap.spellMap(paladin));
+        assertEquals("Berserk", testSubjectMap.spellMap(druid));
+        assertEquals("Living bomb", testSubjectMap.spellMap(mage));
+        assertEquals("Divine Storm", testSubjectMap.spellMap(paladin));
+    }
+
+    @ParameterizedTest
+    @MethodSource("data")
+    void spellParamTest(Hero hero, String spellExpected){
+        assertEquals(spellExpected, testSubjectIfElse.spell(hero));
+        assertEquals(spellExpected, testSubjectSwitch.spell(hero));
+        assertEquals(spellExpected, testSubjectMap.spellMap(hero));
+    }
+
+    private static Stream<Arguments> data(){
+        return Stream.of(
+                Arguments.of(new Druid("druid"), "Berserk"),
+                Arguments.of(new Mage("mage"), "Living bomb"),
+                Arguments.of(new Druid("paladin"), "Divine Storm")
+        );
     }
 }

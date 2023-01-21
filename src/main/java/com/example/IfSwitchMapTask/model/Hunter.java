@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class Hunter extends Hero{
 
+    public Hunter(String myClass) {
+        super(myClass);
+    }
+
     @Override
     public String superAbility() {
         return "Explosive shot";

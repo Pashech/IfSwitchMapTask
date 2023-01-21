@@ -12,6 +12,10 @@ public class Hero implements Ability {
 
     private String myClass;
 
+    public Hero(String myClass) {
+        this.myClass = myClass;
+    }
+
     @Override
     public String superAbility() {
         return "";

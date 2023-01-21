@@ -1,15 +1,18 @@
 package com.example.IfSwitchMapTask.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class Mage extends Hero {
+    public Mage(String myClass) {
+        super(myClass);
+    }
 
     @Override
     public String superAbility() {

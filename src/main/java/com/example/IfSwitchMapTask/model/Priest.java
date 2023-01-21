@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class Priest extends Hero{
 
+    public Priest(String myClass) {
+        super(myClass);
+    }
+
     @Override
     public String superAbility() {
         return "Merging with darkness";
